@@ -1,49 +1,78 @@
-/* 1. 全域背景與基礎設定 */
+/* =========================================
+   1. 全域基礎與背景
+   ========================================= */
 html, body, #root {
   margin: 0;
   padding: 0;
   width: 100%;
-  /* 修正：不再強制鎖死視窗，改用 min-height 確保背景延伸 */
-  min-height: 100vh; 
+  min-height: 100vh;
   background: #090a0f !important;
-  color: white;
 }
 
+/* 深色科技感背景 */
 body {
-  /* 背景漸層 */
-  background: radial-gradient(circle at top right, #1b2735 0%, #090a0f 100%) !important;
-  /* 讓卡片在畫面中居中 */
-  display: flex;
-  align-items: center; 
-  justify-content: center;
-  padding: 20px 0; /* 給予上下邊距，避免卡片貼邊 */
+  background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%) !important;
+  color: #fff;
 }
 
-/* 2. 管理頁面外層容器 */
-.admin-wrapper {
+/* =========================================
+   2. 登入頁面專屬 (強力居中)
+   ========================================= */
+.login-page-container {
   width: 100%;
-  max-width: 1400px; /* 限制最大寬度，避免在大螢幕太散 */
-  margin: 0 auto;
+  height: 100vh; /* 佔滿視窗高度 */
+  display: flex; /* 使用 Flex 進行垂直水平居中 */
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* 登入頁禁止捲動 */
 }
 
-/* 3. 科技風玻璃卡片 - 滾動修正核心 */
-.glass-card {
-  background: rgba(255, 255, 255, 0.03) !important;
+.login-card {
+  background: rgba(255, 255, 255, 0.05) !important;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  color: white !important;
+}
+
+.login-img {
+  background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1000');
+  background-size: cover;
+  background-position: center;
+  min-height: 500px;
+}
+
+/* 強制恢復輸入框間距 */
+.login-form-container .mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+/* =========================================
+   3. 管理後台專屬 (開啟捲動)
+   ========================================= */
+.admin-wrapper {
+  width: 100%;
+  min-height: 100vh; /* 確保內容多時可以往下延伸 */
+  padding: 40px 20px; /* 給予上下邊距，不貼邊 */
+}
+
+/* 玻璃卡片：開啟內部獨立捲動 */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 15px;
   
-  /* 重要：設定固定高度並開啟垂直滾動 */
+  /* 核心：限制高度並開啟捲動 */
   height: 80vh; 
   overflow-y: auto !important; 
   overflow-x: hidden;
-  
-  position: relative;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
 }
 
-/* 4. 左側表格風格 (徹底去白化) */
+/* 管理頁表格去白化 */
 .tech-table {
   color: #fff !important;
   background: transparent !important;
@@ -53,7 +82,7 @@ body {
   background: rgba(0, 210, 255, 0.15) !important;
   color: #00d2ff !important;
   border-bottom: 2px solid #00d2ff !important;
-  position: sticky; /* 標題固定在頂部 */
+  position: sticky; /* 標題固定 */
   top: 0;
   z-index: 5;
 }
@@ -61,23 +90,12 @@ body {
 .tech-table td {
   background: transparent !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-  padding: 12px 10px !important;
 }
 
-.tech-table tbody tr:hover td {
-  background: rgba(0, 210, 255, 0.05) !important;
-  cursor: pointer;
-}
-
-/* 5. 表單元件與文字 */
+/* =========================================
+   4. 通用 UI 元件 (Common)
+   ========================================= */
 .text-cyan { color: #00d2ff !important; }
-
-.form-label { 
-  color: #00d2ff; 
-  font-weight: bold; 
-  font-size: 0.8rem; 
-  margin-top: 10px;
-}
 
 .form-control, .form-select {
   background: rgba(255, 255, 255, 0.07) !important;
@@ -85,24 +103,28 @@ body {
   color: #fff !important;
 }
 
-/* 6. 圖片容器 */
-.main-img-container {
-  border: 1px solid rgba(0, 210, 255, 0.3);
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 15px;
-  background: rgba(0, 0, 0, 0.3);
+.form-label { color: #00d2ff; font-weight: bold; }
+
+.btn-login {
+  background: linear-gradient(45deg, #00d2ff, #3a7bd5) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 600;
+  transition: 0.3s;
 }
 
-.main-img-container img {
-  width: 100%;
-  height: auto;
-}
+.btn-login:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-/* 7. 自定義滾動條 (美化) */
-.glass-card::-webkit-scrollbar { width: 6px; }
-.glass-card::-webkit-scrollbar-track { background: transparent; }
+/* 自定義捲動條 */
+.glass-card::-webkit-scrollbar { width: 5px; }
 .glass-card::-webkit-scrollbar-thumb {
   background: #00d2ff;
   border-radius: 10px;
+}
+
+.main-img-container {
+  border: 1px solid rgba(0, 210, 255, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.2);
 }
